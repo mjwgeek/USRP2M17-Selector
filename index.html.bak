@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>M17 Reflector Selector</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: black;
+            color: white;
+        }
+        h1, h2 {
+            color: #00ff00;
+        }
+        select {
+            width: 300px;
+            margin: 10px 0;
+            background-color: #333;
+            color: white;
+            border: 1px solid #00ff00;
+        }
+        button {
+            padding: 10px 15px;
+            background-color: #00ff00;
+            border: none;
+            color: black;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #008000;
+        }
+        img {
+            width: 120px;
+            height: 120px;
+            display: inline; /* Change to inline for left alignment */
+            margin-right: 20px; /* Add some space to the right */
+        }
+        .details {
+            margin-top: 20px;
+        }
+        .logo-container {
+            display: flex; /* Use flexbox for alignment */
+            align-items: center; /* Center vertically */
+        }
+    </style>
+</head>
+<body>
+    <div class="logo-container">
+        <img src="m17glow.png" alt="M17 Logo" onclick="window.location.href='https://m17project.org/'">
+    </div>
+    <h1>Select M17 Reflector</h1>
+    <select id="reflectorSelect"></select>
+    <h2>Select Module</h2>
+    <select id="moduleSelect">
+        <option value="">-- Select Module --</option>
+        <script>
+            for (let i = 0; i < 26; i++) {
+                const option = document.createElement('option');
+                option.value = String.fromCharCode(65 + i); // A-Z
+                option.textContent = `Module ${String.fromCharCode(65 + i)}`; // Module A-Z
+                document.getElementById('moduleSelect').appendChild(option);
+            }
+        </script>
+    </select>
+    <button onclick="connectReflector()">Connect</button>
+    <button onclick="disconnectReflector()">Disconnect</button>
+
+    <div class="details">
+        <h2>Reflector Details</h2>
+        <p>Reflector Name: <span id="reflectorName">N/A</span></p>
+        <p>IP Address: <a id="ipAddress" href="#">N/A</a></p>
+        <p>Callsign: <span id="callsign">N/A</span></p>
+    </div>
+
+    <script>
+        async function loadReflectors() {
+            const response = await fetch('/m17/reflector_options.txt');
+            const text = await response.text();
+            const reflectors = text.split('\n').filter(line => line.trim());
+            const select = document.getElementById('reflectorSelect');
+            reflectors.forEach(reflector => {
+                const option = document.createElement('option');
+                option.value = reflector.split(' - ')[0];
+                option.textContent = reflector;
+                select.appendChild(option);
+            });
+        }
+
+        async function getIniData() {
+            try {
+                const response = await fetch('/m17/get_ini.php');
+                const data = await response.json();
+                
+                console.log('INI data received:', data);
+
+                if (data.error) {
+                    console.error('Error fetching INI data:', data.error);
+                } else {
+                    document.getElementById('reflectorName').textContent = data.reflector_name || 'N/A';
+                    document.getElementById('ipAddress').textContent = data.ip_address || 'N/A';
+                    document.getElementById('ipAddress').href = data.ip_address ? 'http://' + data.ip_address : '#';
+                    document.getElementById('callsign').textContent = data.callsign || 'N/A';
+                }
+            } catch (error) {
+                console.error('Error fetching INI data:', error);
+            }
+        }
+
+        async function connectReflector() {
+            const selected = document.getElementById('reflectorSelect').value;
+            const moduleLetter = document.getElementById('moduleSelect').value;
+
+            console.log('Selected Reflector:', selected);
+            console.log('Selected Module:', moduleLetter);
+
+            if (moduleLetter) {
+                console.log(`Sending request to /m17/connect.php with:`, { reflector: selected, module: moduleLetter });
+                const response = await fetch('/m17/connect.php', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ reflector: selected, module: moduleLetter }),
+                });
+
+                if (response.ok) {
+                    const result = await response.json();
+                    console.log('Response:', result);
+                    alert(result.message || 'Connected successfully');
+
+                    // Re-fetch the INI data to verify changes
+                    await getIniData();
+                } else {
+                    const errorText = await response.text();
+                    console.error('Response error:', errorText);
+                    alert('Failed to connect to the reflector: ' + errorText);
+                }
+            } else {
+                alert('Please select a module letter.');
+            }
+        }
+
+        async function disconnectReflector() {
+            const disconnectData = {
+                reflector: 'DISCONNECT',
+                module: 'DISCONNECT'
+            };
+
+            const response = await fetch('/m17/disconnect.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(disconnectData),
+            });
+
+            if (response.ok) {
+                alert('Disconnected successfully');
+                getIniData(); // Refresh INI data
+            } else {
+                const errorText = await response.text();
+                console.error('Error disconnecting:', errorText);
+                alert('Failed to disconnect: ' + errorText);
+            }
+        }
+
+        window.onload = function() {
+            loadReflectors();
+            getIniData();
+        };
+    </script>
+</body>
+</html>

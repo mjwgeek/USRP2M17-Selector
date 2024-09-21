@@ -1,0 +1,204 @@
+M17-000 - Ham Radio Net Zone - SA7SVR (81.231.241.25) - Country: SE - URL: https://m17.cqzone.org
+M17-001 - Freedmr GREECE (185.243.214.85) - Country: GR - URL: https://greece.freedmr.online
+M17-002 - cumbriaCQ.com (80.190.85.142) - Country: GB - URL: http://digital.cumbriacq.com:3000
+M17-007 - K6JWN (96.43.137.101) - Country: US - URL: https://m17-007.k6jwn.org
+M17-010 - Ham Radio Net Zone - SA7SVR (46.59.68.211) - Country: GR - URL: http://m17net.org
+M17-020 - K2IE (66.175.215.217) - Country: US - URL: https://m17-020.k2ie.net
+M17-033 - IT-MULTIPROTOCOL-NETWORK (46.226.178.84) - Country: IT - URL: https://m17-033.dyndns.org
+M17-038 - KA8SCP (44.208.72.162) - Country: US - URL: http://m17038.dyndns.org
+M17-090 - Radio Technology Group (172.245.19.144) - Country: US - URL: https://m17090.radiotechnology.xyz
+M17-100 - HELLAS Zone Net! (81.231.241.25) - Country: GR - URL: https://hellaszone.com/m17/
+M17-111 - HELLAS Ham Radio Net Zone (46.59.68.211) - Country: SE - URL: http://m17net.org:8080
+M17-128 - RadioHUB (200.80.247.90) - Country: AR - URL: http://m17-128.radiohub.ar
+M17-138 - E23JWE (103.195.7.20) - Country: TH - URL: https://m17138.freeddns.org
+M17-148 - HS3TDI (122.154.141.51) - Country: TH - URL: https://m17.hs3tdi.com/
+M17-149 - HS3TDI (122.154.140.136) - Country: TH - URL: https://m17.pwk.ac.th/
+M17-164 - K4FSG (44.98.254.88) - Country: US - URL: http://reflector.k4fsg.net
+M17-169 - DC9VQ (79.213.250.124) - Country: DE - URL: https://urf169.dc9vq.de
+M17-182 - DS5QDR HAM World (119.199.235.196) - Country: KR - URL: http://m17-182.duckdns.org:90
+M17-190 - Argentina Room (186.123.100.105) - Country: AR - URL: https://m17.argentina.net
+M17-199 - TEST (45.164.228.196) - Country: AR - URL: http://www.google.com
+M17-201 - M0XSI (157.245.45.67) - Country: GB - URL: https://m17.xlx201.uk
+M17-202 - HELLAS Zone Net ! (81.231.241.25) - Country: GR - URL: https://m17net.cqzone.org
+M17-212 - WMRA (45.63.54.20) - Country: US - URL: http://wmra-multimode.link:3000
+M17-216 - KM8V (74.214.25.135) - Country: US - URL: https://xlx216.km8v.com/m17
+M17-222 - Hellas-FRN (51.154.9.233) - Country: GR - URL: https://hellas-frn.net/m17-222
+M17-235 - DVSPH (75.119.140.37) - Country: GB - URL: https://dvsph.net/m17
+M17-236 - OhioLink Network (209.190.4.10) - Country: US - URL: https://xlx.kd8grn.net
+M17-239 - AC8ZD (149.28.115.164) - Country: US - URL: https://m17.ac8zd.com
+M17-245 - M0VVA (192.248.165.35) - Country: GB - URL: https://m17245.ddns.net
+M17-255 - QRZ Odessa (194.143.137.145) - Country: UA - URL: http://m17ua.qrz.od.ua:3000/
+M17-260 - sp1are (88.156.169.164) - Country: PL - URL: http://arcadius.ddns.net:8081/
+M17-265 - SQ5akc (185.174.14.75) - Country: PL - URL: http://185.174.14.75/M17
+M17-334 - Alabama Link (96.47.95.121) - Country: US - URL: https://m17.radiotechnology.xyz
+M17-386 - Foxhole  Radio (40.122.247.234) - Country: US - URL: https://m17.foxhole.radio
+M17-432 - VK3JED (112.213.34.65) - Country: AU - URL: https://m17.vkradio.com
+M17-603 - Central NH Amateur Radio Club (65.175.191.169) - Country: US - URL: http://m17-603.cnharc.org
+M17-621 - HRCCLINK (50.52.77.68) - Country: US - URL: https://urf.hrcc.link
+M17-659 - Open Source Amateur Radio Club (64.23.130.152) - Country: US - URL: http://m17.af0ss.org:1717
+M17-672 - Pi-Star Multi-Reflector (MW0MWZ) (213.171.214.2) - Country: GB - URL: https://xlx672-dash.pistar.uk/
+M17-705 - ve3ukw (216.129.211.32) - Country: CA - URL: http://m17.ve3ukw.ca:3000
+M17-714 - EA3HKB (81.169.158.155) - Country: ES - URL: https://m17.ea3hkb.cat
+M17-718 - 515930-Net.IT_Hub (136.244.96.172) - Country: IT - URL: http://515930.asnode.org/m17
+M17-724 - PU5KOD (177.131.119.153) - Country: BR - URL: http://pu5kod.net:3000
+M17-727 - E27GAQ (143.198.216.15) - Country: TH - URL: https://m17-727.ddns.net
+M17-734 - DGTLCOM Great Lakes Digital Common Interlink (71.82.206.251) - Country: US - URL: https://urf734.dgtlcom.net
+M17-765 - JG1UAA (153.126.212.136) - Country: JP - URL: https://ik1-342-31132.vs.sakura.ne.jp/~ham/m17/
+M17-815 - Fun Machine Linked Repeater System (47.5.115.3) - Country: US - URL: https://m17.we0fun.com
+M17-818 - E21NZC (188.166.226.76) - Country: TH - URL: https://m17.hamnew.com
+M17-847 - Chandler Hams (98.171.104.209) - Country: US - URL: https://m17-847.kk7mnz.com
+M17-848 - KK7MNZ (24.199.69.152) - Country: US - URL: https://m17-848.kk7mnz.com
+M17-909 - HS1AB (198.13.49.172) - Country: TH - URL: http://xlx.vra.or.th:3000
+M17-910 - XLX910 - Washington, DC - Maryland - Virginia (78.138.0.61) - Country: US - URL: http://m17.mywire.org:3000
+M17-911 - HS5BLO (128.199.239.91) - Country: TH - URL: https://911m17.freeddns.org
+M17-922 - CQ-UK (81.150.10.63) - Country: GB - URL: http://m17.ycs235.com
+M17-926 - KF3RRY (44.31.112.11) - Country: US - URL: https://urf.kf3rry.org
+M17-942 - SADARC (18.170.163.13) - Country: GB - URL: http://m17-942.ntsy.me:3000/
+M17-948 - ICQPodcast (M1MRB / W9ICQ) (46.101.36.246) - Country: GB - URL: http://m17icq.icqpodcast.com
+M17-983 - K8JTK Hub Multimode ILS/DVMIS (K8JTK.org) (45.76.228.241) - Country: US - URL: https://M17-983.k8jtk.org/
+M17-999 - IW1ELO (94.177.173.53) - Country: IT - URL: https://m17-999.freedmr.it/
+M17-AFG - Amateurfunk Forschungsgruppe der TU Kaiserslautern DL0XK (131.246.124.119) - Country: DE - URL: https://m17.amateurfunk.uni-kl.de
+M17-AJW - N1AJW (45.58.44.163) - Country: US - URL: https://m17.alecwasserman.com/
+M17-AND - xreflector.es (141.94.206.232) - Country: ES - URL: https://m17and.xreflector.es/m17
+M17-AP2 - AP2CJ (58.65.136.202) - Country: PK - URL: http://m17.pakhams.com:3000
+M17-ARC - DX1ARC (167.179.91.150) - Country: PH - URL: https://m17.ddns.net/m17/index.php
+M17-ARG - LU8ANB (152.170.70.57) - Country: AR - URL: https://m17arg.ddns.net/
+M17-ASL - https://allstarlink-italia.it (74.50.85.149) - Country: IT - URL: https://m17asl.ddns.net/
+M17-AUT - ÖVSV (195.26.215.3) - Country: AT - URL: https://m17-aut.xreflector.net/
+M17-BAT - Sez. ARI di Trani (139.64.246.208) - Country: IT - URL: http://aritrani.is-very-good.org/m17/
+M17-BEL - UBA-BE (173.212.223.187) - Country: BE - URL: http://2061.adn.systems:3000
+M17-BRA - PU5KOD (35.198.35.247) - Country: BR - URL: http://m17bra.net
+M17-BRO - AD8DP (68.37.44.22) - Country: US - URL: https://m17-bro.dudetronics.com
+M17-CAD - VA3CZK (166.48.140.139) - Country: CA - URL: http://ontxlink.hopto.org/m17/index.php
+M17-CAN - VE3MIC (45.72.192.110) - Country: CA - URL: https://m17-ve3rig.ddns.net
+M17-CAS - RC-Castellar (89.36.222.146) - Country: ES - URL: https://castellar.m17.es/m17/
+M17-CAT - www.digigrup.org (172.104.140.230) - Country: ES - URL: https://m17catalonia.ddns.net/
+M17-CCV - JA2CCV (116.91.197.3) - Country: JP - URL: https://m17.owari.biz/ref-dash
+M17-CHI - HB9CSR Basel Group (212.237.33.114) - Country: CH - URL: https://m17ch-italia.ddns.net/
+M17-CHP - Hosted by W0CHP of WPSD fame ;-) (104.218.221.46) - Country: US - URL: https://m17.w0chp.net
+M17-CL1 - CE3MRO (190.54.137.189) - Country: CL - URL: https://m17.radioaficion.pro/
+M17-CLB - M17 Club (158.101.96.102) - Country: US - URL: https://m17.club
+M17-COR - TK5KT (89.234.155.8) - Country: FR - URL: HTTP://m17.radioamateur.tk
+M17-CQM - WA8BRO Backyard Repeater Owners of America - WW2MI, W8WAC, KA8WYN, K8NET (13.59.123.174) - Country: US - URL: http://m17.wa8bro.com
+M17-CSR - C.I.S.A.R. ITALIA (164.132.58.167) - Country: IT - URL: http://m17.cisar.it
+M17-D22 - DC7JZB - OV D22 (90.187.72.177) - Country: DE - URL: https://dc7jzb.de/M17Dash
+M17-DDI - DoDropIn Radio Network (74.32.197.9) - Country: US - URL: https://m17.dodropin.net
+M17-DEU - xreflector.net / DG9FFM (194.59.205.228) - Country: DE - URL: https://m17-deu.xreflector.net/
+M17-DEV - Localhost development reflector entry. (127.0.0.1) - Country: AQ - URL: https://tarxvf.tech/
+M17-DGN - Italy Centro (87.1.0.40) - Country: IT - URL: Http://famiuse.ddns.net:2015
+M17-DMR - freestar.network (81.136.218.49) - Country: GB - URL: https://m17.freestar.network
+M17-EA1 - DMR+ 4371 (80.211.29.226) - Country: ES - URL: https://eadistrito1.m17.es/m17/
+M17-ECR - KO4UYJ along with KD2UQK and K2SHF (162.203.31.194) - Country: US - URL: https://ko4uyj.com
+M17-ESP - xreflector.es (207.180.252.141) - Country: ES - URL: https://latinos.m17.es/m17/
+M17-FIN - OH6KW (130.255.76.139) - Country: FI - URL: https://openvpn.fi/M17/
+M17-FOG - THE FOG - Future Orientated Gateways (95.179.203.54) - Country: GB - URL: https://m17.ham-radio-fog.org/
+M17-FRA - F5DAN (161.97.163.54) - Country: FR - URL: http://m17-fra.f5dan.fr:3000
+M17-FRH - F4HTN (51.75.194.162) - Country: FR - URL: https://m17.f4htn.fr
+M17-FRN - HELLAS-FRN (192.168.178.141) - Country: GR - URL: https://m17krotonfrn.ddns.net
+M17-FUR - KF3RRY (45.76.29.81) - Country: US - URL: https://ord1.w3fur.radio:17000
+M17-FVG - iv3jdv (80.211.64.211) - Country: IT - URL: https://m17fvg.hblink.it
+M17-GAX - EA4GAX (51.83.78.210) - Country: ES - URL: https://ea4gax.es/M17/
+M17-GR1 - FreeDmr GREECE (185.243.214.85) - Country: GR - URL: https://greece.freedmr.online
+M17-GRN - SV0XAL (92.107.7.227) - Country: GR - URL: https://hellasfrn.no-ip.org:445
+M17-GSP - LZ1GSP (37.143.206.229) - Country: BG - URL: https://xlxsof.ddns.net:17001
+M17-HAM - AC1KV (140.82.14.24) - Country: US - URL: https://m17-ham.ddns.net/
+M17-HNC - CERT SPAIN (47.62.127.2) - Country: ES - URL: https://certspain.ddns.net
+M17-HRV - Ham Radio Village (52.15.234.145) - Country: US - URL: https://m17.hamvillage.org
+M17-HUB - hubnetwork.uk (86.26.29.17) - Country: GB - URL: https://g7rpg.hubnetwork.uk/m17
+M17-HWN - HamWAN Memphis Metro (44.34.132.17) - Country: US - URL: https://m17.memhamwan.net/
+M17-ILS - W9ILS (149.28.123.123) - Country: US - URL: http://ILS.crabdance.com
+M17-IND - VU3TBR (124.123.68.50) - Country: IN - URL: https://ysf-india.ddns.net/
+M17-IP6 - VK3JED (None) - Country: AU - URL: http://m17-ip6.vkradio.com:3000
+M17-IRN - International Radio Network (74.32.197.12) - Country: US - URL: https://m17.irn.radio
+M17-IS0 - Sardinia Is. https://multiprotocol.is0.org/ (51.254.206.201) - Country: IT - URL: https://m17.is0.org/
+M17-ITA - IV3JDV (80.211.190.216) - Country: IT - URL: https://m17ita.hblink.it
+M17-ITC - IZ0THD (185.205.209.70) - Country: IT - URL: http://185.205.209.70:3000
+M17-ITD - IU7MNA (188.213.168.69) - Country: IT - URL: https://m17.itdmr.it
+M17-JAX - Kanazawa VoIP Club (153.194.16.139) - Country: JP - URL: https://m17-jax.f5.si:8800/
+M17-JP1 - JJ1YEG Sotobo Amateu Radio Club (219.117.204.205) - Country: JP - URL: https://m17.jh1blt.net/m17/
+M17-JPN - Kanazawa VoIP Club (180.21.181.9) - Country: JP - URL: https://m17.f5.si/
+M17-JWG - KD9KCK (67.175.64.113) - Country: US - URL: https://m17.jwgtechs.com
+M17-KOR - HL1RR (175.208.150.170) - Country: KR - URL: http://m17-kor.dvham.com
+M17-KP4 - KP4CA Digital Network (24.48.232.244) - Country: PR - URL: https://kp4ca-m17.ddns.net/
+M17-KPH - KN6SF (107.152.46.246) - Country: US - URL: https://m17.kapihan.net
+M17-KR1 - KARDCA (158.247.215.135) - Country: KR - URL: https://m17-kr1.kardca.or.kr/
+M17-KRD - RL7B (77.66.180.214) - Country: RU - URL: http://m17-krd.keenetic.link:3000
+M17-KRG - N9KRG (155.138.212.8) - Country: US - URL: https://n9krgm17.ddns.net
+M17-LAB - M17 Project (1.2.3.4) - Country: US - URL: https://ref.m17labs.org
+M17-LAT - N3TX (80.211.94.145) - Country: US - URL: https://latinos.m17.es/m17/
+M17-LDV - IU5HJU Michele ARI Vinci (80.211.99.134) - Country: IT - URL: https://ldv.m17.es/m17/
+M17-LEF - LEFARS Multi-Reflector (M0UPM) (77.68.25.66) - Country: GB - URL: https://xlxlef-dash.gb7hh.co.uk
+M17-LIM - PA7LIM (207.244.224.170) - Country: NL - URL: https://m17.pa7lim.nl/
+M17-LSC - KE4TLC (75.182.2.162) - Country: US - URL: https://ke4tlc.ddns.net
+M17-M17 - KC1AWV (152.70.192.70) - Country: US - URL: https://ref.m17.link
+M17-MBK - KF7MBK (104.145.237.90) - Country: US - URL: https://m17.diteng.com
+M17-MEX - XE1E (0.0.0.0) - Country: MX - URL: https://m17.xe1e.net
+M17-MGB - PU4RON (165.73.249.152) - Country: BR - URL: https://mgbrasil-m17.ddns.net
+M17-MJA - VK3MJA (103.236.163.81) - Country: AU - URL: https://mja.vkradio.com/
+M17-N18 - Jan, DG3YJB (144.76.12.90) - Country: DE - URL: http://dg3yjb.beba.re/M17Reflector/index.php
+M17-NLD - M17 Dutch Reflector PD2VDY (51.83.46.75) - Country: NL - URL: http://51.83.46.75:39000
+M17-NOR - LA2K club station (185.35.185.100) - Country: NO - URL: https://m17.la2k.no
+M17-NRG - LZ1GSP (92.247.173.181) - Country: BG - URL: http://m17nrg.ddns.net
+M17-NWR - North Western Repeater Group UK (159.242.127.220) - Country: GB - URL: https://m17.nwrg.org.uk
+M17-NYS - KD2YFY (135.148.149.42) - Country: US - URL: https://m17nys.kd2yfy.net:444
+M17-NZD - ZL1JX (101.100.136.64) - Country: NZ - URL: https://m17-nzd.m1m0n.net
+M17-NZL - ZL2AUS (149.28.165.127) - Country: NZ - URL: https://m17nzl.drgnz.com/
+M17-OAF - VU3FBT & S21AF (152.67.9.13) - Country: BD - URL: http://m17.onirbanbd.com
+M17-OFW - DV1PPK (45.76.176.109) - Country: PH - URL: https://ofwham.duckdns.org/index.php
+M17-OH6 - OH6EWU and OH6AC (130.255.76.76) - Country: FI - URL: https://m17oh6.ddns.net/
+M17-OKL - Rogers County Wireless Association (3.208.70.29) - Country: US - URL: https://www.oklahomalink.rcwa.org/m17ref/
+M17-OMO - KJ7OMO (216.155.132.139) - Country: US - URL: https://ham.kimberlychase.com/m17/
+M17-OSK - JL3ZII (116.70.234.141) - Country: JP - URL: https://www.ne.jp/asahi/radio/ham
+M17-OWL - HB9GFX / DG9BDI (185.188.4.15) - Country: DE - URL: https://xlx508.hb9gfx.ch/M17-Reflector-Dashboard/index.php
+M17-OZD - OZ-DMR Network (51.195.201.20) - Country: GB - URL: https://m17.oz-dmr.network/
+M17-PEG - German PEGASUS Project (5.9.59.26) - Country: DE - URL: https://dmr.projekt-pegasus.net/m17/
+M17-PER - Multiprotocolo Perú Digital (190.117.233.28) - Country: PE - URL: https://m17.dmr-peru.net
+M17-PHP - DX8WMG (107.152.47.152) - Country: PH - URL: https://dx8wmg-m17.ddns.net/
+M17-PLC - LZ1PLC (87.252.188.119) - Country: BG - URL: https://bulgaria.ddns.net:17001
+M17-PLG - Penn-Link Group (54.85.206.3) - Country: US - URL: https://xrf245.pennlinkgroup.com/mrefd/
+M17-PN1 - LZ5PN (212.72.212.183) - Country: BG - URL: https://kario88.freeddns.com:3000
+M17-POL - SP7LAK (51.38.132.8) - Country: PL - URL: https://m17.hblink.network/
+M17-POR - CT7AGI (80.211.15.21) - Country: PT - URL: https://m17.hamradio.pt/
+M17-PRT - HamRadioPT (198.244.234.7) - Country: PT - URL: https://m17.hamradio.pt/
+M17-QDR - DS5QDR Heonmin Lee (118.47.146.80) - Country: KR - URL: http://m17-qdr.duckdns.org:90
+M17-QSO - don't publish, I'm just reserving the name for qso.email (127.0.0.1) - Country: US - URL: https://tarxvf.tech
+M17-QUE - Quebec Francais (45.62.250.140) - Country: CA - URL: https://m17-que.ddns.net
+M17-ROM - M17 bridge to Tetra (89.35.160.218) - Country: RO - URL: https://tetra-romania.ddns.net/m17/
+M17-RTX - OpenRTX (93.41.233.12) - Country: IT - URL: https://m17.openrtx.org
+M17-SCS - SCARS - South Coast Amateur Radio Service (45.77.119.250) - Country: US - URL: https://m17-scarsvoip.com/
+M17-SEL - Lookout Mountain Amateur Radio Community (66.42.93.25) - Country: US - URL: https://selink.lmarc.net/m17dash
+M17-SFX - Starfield Amateur Radio Club (133.242.190.226) - Country: JP - URL: https://m17-sfx.starfield.link
+M17-SKY - SkyHub Link System (65.114.195.171) - Country: US - URL: https://m17.skyhublink.com
+M17-SLB - PU4RON (165.73.249.152) - Country: BR - URL: https://m17-digitalvoice.dns.army
+M17-SNI - HS8KF (192.168.1.18) - Country: TH - URL: http://xlx567.dstarthailand.com/
+M17-SPA - EA5GVK & BLASMAKERS (81.2.248.38) - Country: ES - URL: https://hblinkspain.duckdns.org/mrefd/
+M17-SUN - AE5ME (155.138.244.192) - Country: US - URL: https://kc5fm.ddns.net/m17ref/
+M17-SVN - S50PB (193.77.82.184) - Country: SI - URL: http://m17.s5svet.si:17080
+M17-SWD - SWDG - South Wales Digital Group - Test Reflector (45.32.239.121) - Country: GB - URL: https://m17-ref2-swdg.net/
+M17-SWE - AMPRnet.se (44.140.63.12) - Country: SE - URL: https://m17.amprnet.se
+M17-TAR - tarxvf/W2FBI *no dashboard* pyM17 reflector (150.136.4.138) - Country: US - URL: https://tarxvf.tech
+M17-TEX -  (0.0.0.0) - Country: US - URL: http://nowhere.com
+M17-THA - DPRNS (203.150.19.24) - Country: TH - URL: https://m17.dprns.com
+M17-TKO - Ah-huh.net (52.192.129.174) - Country: JP - URL: https://ah-huh.net/m17/
+M17-TNT - 9Z4RG REACT (68.183.19.139) - Country: TT - URL: https://m17.9Z4RG.com
+M17-TSE - Thammasat University (203.131.208.130) - Country: TH - URL: https://tse.undo.it/ref-dash
+M17-TST - KC1AWV (51.81.119.102) - Country: US - URL: https://m17project.org
+M17-TWN - BV3UN (114.34.207.164) - Country: TW - URL: https://m17twn.ddns.net
+M17-UA2 - ORLink (158.101.28.29) - Country: UA - URL: http://digi.uaradio.link
+M17-UAX - QRZ Odessa (178.136.51.229) - Country: UA - URL: http://m17.qrz.od.ua:3000
+M17-UK1 - 2E0LXY (194.146.49.33) - Country: GB - URL: https://2e0lxy.uk/m17
+M17-UQK - KD2UQK Linked to Allstar (100.38.158.68) - Country: US - URL: https://kd2uqk.ham-radio-op.net
+M17-URG - Uruguay Link (23.234.239.179) - Country: UY - URL: https://m17uru.c4fm.es/
+M17-URU - Uruguay Link (23.234.239.179) - Country: UY - URL: https://m17uru.c4fm.es/
+M17-USA - KD2YFY (135.148.148.180) - Country: US - URL: https://m17usa.kd2yfy.net
+M17-VK7 - VK7HSE (45.248.50.37) - Country: AU - URL: https://vk7hse.duckdns.org/m17
+M17-WAL - SWDG - South Wales Digital Group (192.248.172.148) - Country: GB - URL: https://m17-swdg.net/
+M17-WDG - Western US Digital Group W6DGT (107.152.39.89) - Country: US - URL: https://m17.wesdig.com/
+M17-WHO - Who Cares Amateur Radio Group (137.220.63.8) - Country: US - URL: https://m17.whocaresradio.com
+M17-WWD - KE8ANE (192.99.70.1) - Country: US - URL: https://m17wwd.ddns.net/m17
+M17-WWR - Worldwide Ragchew Amateur Radio Net (104.238.145.198) - Country: US - URL: http://104.238.145.198
+M17-XOR - OE3ANC - Dev Reflector (49.12.247.207) - Country: AT - URL: https://ref.oe3xor.at
+M17-XVF - https://tarxvf.tech, no dashboard, test and dev reflector, not always up (104.225.216.221) - Country: US - URL: https://tarxvf.tech
+M17-YSF - PU5KOD (177.131.119.153) - Country: BR - URL: http://m17ysf.pu5kod.net
+M17-ZL3 - ZL3DMH (119.224.19.178) - Country: NZ - URL: https://xlx530.hopto.org/m17
+M17-ZO9 - iw9edp@gmail.com (198.245.55.177) - Country: IT - URL: https://m17zona9.duckdns.org/

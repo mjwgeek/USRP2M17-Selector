@@ -1,0 +1,5 @@
+M17-000 - Ham Radio Net Zone - SA7SVR (81.231.241.25) - Country: SE - URL: https://m17.cqzone.org
+M17-001 - Freedmr GREECE (185.243.214.85) - Country: GR - URL: https://greece.freedmr.online
+M17-002 - cumbriaCQ.com (80.190.85.142) - Country: GB - URL: http://digital.cumbriacq.com:3000
+M17-007 - K6JWN (96.43.137.101) - Country: US - URL: https://m17-007.k6jwn.org
+M17-010 - Ham Radio Net Zone - SA7SVR (46.59.68.211) - Country: GR - URL: http://m17net.org
