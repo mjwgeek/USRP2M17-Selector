@@ -18,7 +18,42 @@ Requirements
   Have USRP2M17 Installed.  See https://wiki.m17project.org/usrp2m17_bridge
 
    *Please note that I used custom ports in my config because I'm using DVSwitch and I wanted ports that were not used by any of those supported modes so plan for that if you are using Allstarlink in your bridge.*
-   If you want to use different ports, open and modify connect.php to the ports that reflect your rpt.conf node ports, reversed of course.  
+   If you want to use different ports, open and modify connect.php to the ports that reflect your rpt.conf node ports, reversed of course.  Here are my rpt.conf settings for node 1998 (my M17 Node).  This file is located in /etc/asterisk/
+   
+[1998]
+
+rxchannel = USRP/127.0.0.1:34008:32008  ; Use the USRP channel driver. Must be enabled in modules.conf
+ 
+ ; 127.0.0.1 = IP of the target application
+     
+ ; 34008 = UDP port the target application is listening on
+    
+ ; 32008 = UDP port ASL is listening on
+
+ duplex = 0				; 0 = Half duplex with no telemetry tones or hang time. Ah, but Allison STILL talks!
+
+ hangtime = 0				; squelch tail hang time 0
+ 
+ althangtime = 0				; longer squelch tail hang time 0
+
+ holdofftelem = 1			; Hold off all telemetry when signal is present on receiver or from connected nodes
+ 
+   ; except when an ID needs to be done and there is a signal coming from a connected node.
+
+telemdefault = 0			; 0 = telemetry output off. Don't send Allison to DMR !!!!!!!!!!!!!!!!! Trust me.
+
+telemdynamic = 0			; 0 = disallow users to change the local telemetry setting with a COP command,
+
+linktolink = no				; disables forcing physical half-duplex operation of main repeater while
+
+   ; still keeping half-duplex semantics (optional)
+
+nounkeyct = 1				; Set to a 1 to eliminate courtesy tones and associated delays.
+
+totime = 170000				; transmit time-out time (in ms) (optional, default 3 minutes 180000 ms
+
+;END OF NODE 1998;
+
 
 Installation Instructions
 
