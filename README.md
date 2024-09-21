@@ -55,7 +55,9 @@ totime = 170000				; transmit time-out time (in ms) (optional, default 3 minutes
 ;END OF NODE 1998;
 
 
-Installation Instructions
+
+
+## Installation Instructions
 
 1) Clone the Repository
 
