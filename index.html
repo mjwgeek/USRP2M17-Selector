@@ -10,9 +10,13 @@
             margin: 20px;
             background-color: black;
             color: white;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
         h1, h2 {
             color: #00ff00;
+            margin: 10px 0;
         }
         select {
             width: 300px;
@@ -20,13 +24,16 @@
             background-color: #333;
             color: white;
             border: 1px solid #00ff00;
+            padding: 5px;
         }
         button {
-            padding: 10px 15px;
+            padding: 8px 12px; /* Adjusted size */
             background-color: #00ff00;
             border: none;
             color: black;
             cursor: pointer;
+            margin: 5px; 
+            transition: background-color 0.3s;
         }
         button:hover {
             background-color: #008000;
@@ -34,15 +41,27 @@
         img {
             width: 120px;
             height: 120px;
-            display: inline;
+            display: inline-block;
             margin-right: 20px;
         }
         .details {
             margin-top: 20px;
+            background-color: #222;
+            padding: 10px;
+            border-radius: 8px;
+            max-width: 300px; /* Set maximum width */
+            min-width: 250px; /* Set minimum width */
+            text-align: left;
+            box-shadow: 0 0 15px rgba(0, 255, 0, 0.5);
+            transition: box-shadow 0.3s;
+        }
+        .details:hover {
+            box-shadow: 0 0 25px rgba(0, 255, 0, 0.7);
         }
         .logo-container {
             display: flex;
             align-items: center;
+            margin-bottom: 20px;
         }
     </style>
 </head>
@@ -64,9 +83,12 @@
             }
         </script>
     </select>
-    <button onclick="connectReflector()">Connect</button>
-    <button onclick="disconnectReflector()">Disconnect</button>
-    <button onclick="updateReflectors()">Update Reflectors</button>
+	<div style="text-align: center;">
+		<button onclick="connectReflector()">Connect</button>
+		<button onclick="disconnectReflector()">Disconnect</button>
+		<button onclick="updateReflectors()">Update Reflectors</button>
+		<button onclick="location.href='Custom_Reflector.php'">Custom Reflector</button>
+	</div>
 
     <div class="details">
         <h2>Reflector Details</h2>
@@ -92,41 +114,36 @@
             });
         }
 
-		async function getIniData() {
-			try {
-				const response = await fetch('/m17/get_ini.php');
-				const data = await response.json();
+        async function getIniData() {
+            try {
+                const response = await fetch('/m17/get_ini.php');
+                const data = await response.json();
 
-				if (data.error) {
-					console.error('Error fetching INI data:', data.error);
-				} else {
-					const reflectorName = data.reflector_name || 'N/A';
-					const ipAddress = data.ip_address || 'N/A';
-					const callsign = data.callsign || 'N/A';
+                if (data.error) {
+                    console.error('Error fetching INI data:', data.error);
+                } else {
+                    document.getElementById('reflectorName').textContent = data.reflector_name || 'N/A';
+                    document.getElementById('ipAddress').textContent = data.ip_address || 'N/A';
+                    document.getElementById('callsign').textContent = data.callsign || 'N/A';
 
-					document.getElementById('reflectorName').textContent = reflectorName;
-					document.getElementById('ipAddress').textContent = ipAddress;
-					document.getElementById('callsign').textContent = callsign;
+                    const reflectorsResponse = await fetch('/m17/reflector_options.txt');
+                    const reflectorsText = await reflectorsResponse.text();
+                    const reflectors = reflectorsText.split('\n').filter(line => line.trim());
 
-					// Fetch the reflector options again to get the URL
-					const reflectorsResponse = await fetch('/m17/reflector_options.txt');
-					const reflectorsText = await reflectorsResponse.text();
-					const reflectors = reflectorsText.split('\n').filter(line => line.trim());
-
-					// Find the corresponding reflector entry by IP address
-					const selectedDetails = reflectors.find(ref => ref.includes(ipAddress));
-					if (selectedDetails) {
-						const urlMatch = selectedDetails.match(/- URL:\s*(.+)/);
-						const url = urlMatch ? urlMatch[1].trim() : 'N/A';
-						document.getElementById('url').innerHTML = `<a href="${url}" target="_blank">${url}</a>`;
-					} else {
-						document.getElementById('url').textContent = 'N/A';
-					}
-				}
-			} catch (error) {
-				console.error('Error fetching INI data:', error);
-			}
-		}
+                    const selectedReflector = document.getElementById('reflectorSelect').value;
+                    const selectedDetails = reflectors.find(ref => ref.includes(selectedReflector));
+                    if (selectedDetails) {
+                        const urlMatch = selectedDetails.match(/- URL:\s*(.+)/);
+                        const url = urlMatch ? urlMatch[1].trim() : 'N/A';
+                        document.getElementById('url').innerHTML = `<a href="${url}" target="_blank">${url}</a>`;
+                    } else {
+                        document.getElementById('url').textContent = 'N/A';
+                    }
+                }
+            } catch (error) {
+                console.error('Error fetching INI data:', error);
+            }
+        }
 
         async function connectReflector() {
             const selected = document.getElementById('reflectorSelect').value;
