@@ -155,18 +155,26 @@
                     document.getElementById('ipAddress').textContent = data.ip_address || 'N/A';
                     document.getElementById('callsign').textContent = data.callsign || 'N/A';
 
-                    const reflectorsResponse = await fetch('/m17/reflector_options.txt');
-                    const reflectorsText = await reflectorsResponse.text();
-                    const reflectors = reflectorsText.split('\n').filter(line => line.trim());
+                    // Fetch all reflectors to find the URL based on the IP
+                    const defaultResponse = await fetch('/m17/reflector_options.txt');
+                    const defaultText = await defaultResponse.text();
+                    const defaultReflectors = defaultText.split('\n').filter(line => line.trim());
 
-                    const selectedReflector = document.getElementById('reflectorSelect').value;
-                    const selectedDetails = reflectors.find(ref => ref.includes(selectedReflector));
-                    if (selectedDetails) {
-                        const urlMatch = selectedDetails.match(/- URL:\s*(.+)/);
-                        const url = urlMatch ? urlMatch[1].trim() : 'N/A';
-                        document.getElementById('url').innerHTML = `<a href="${url}" target="_blank">${url}</a>`;
+                    const customResponse = await fetch('/m17/custom_reflectors.txt');
+                    const customText = await customResponse.text();
+                    const customReflectors = customText.split('\n').filter(line => line.trim());
+
+                    const allReflectors = [...defaultReflectors, ...customReflectors];
+                    const selectedIP = data.ip_address; // Use the IP from INI data
+
+                    // Find the URL based on the selected IP address
+                    const urlMatch = allReflectors.find(ref => ref.includes(selectedIP));
+                    if (urlMatch) {
+                        const url = urlMatch.match(/- URL:\s*(.+)/);
+                        const urlValue = url ? url[1].trim() : 'N/A';
+                        document.getElementById('url').innerHTML = `<a href="${urlValue}" target="_blank">${urlValue}</a>`;
                     } else {
-                        document.getElementById('url').textContent = 'N/A';
+                        document.getElementById('url').textContent = 'N/A'; // No matching URL found
                     }
                 }
             } catch (error) {

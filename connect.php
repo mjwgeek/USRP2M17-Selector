@@ -10,15 +10,30 @@ $module = $data['module'];
 
 $ini_file_path = '/opt/USRP2M17/USRP2M17.ini';
 $reflector_options_path = '/var/www/html/m17/reflector_options.txt';
+$custom_reflectors_path = '/var/www/html/m17/custom_reflectors.txt'; // Path to custom reflectors
 
 // Fetch the IP address from the reflector options file
 $ip_address = null;
+
+// Check default reflector options
 $reflector_options = file($reflector_options_path, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
 foreach ($reflector_options as $line) {
     if (strpos($line, $reflector) === 0) {
         preg_match('/\((.*?)\)/', $line, $matches);
         $ip_address = $matches[1] ?? null;
         break;
+    }
+}
+
+// If IP address not found, check custom reflectors
+if ($ip_address === null) {
+    $custom_reflectors = file($custom_reflectors_path, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
+    foreach ($custom_reflectors as $line) {
+        if (strpos($line, $reflector) === 0) {
+            preg_match('/\((.*?)\)/', $line, $matches);
+            $ip_address = $matches[1] ?? null;
+            break;
+        }
     }
 }
 
