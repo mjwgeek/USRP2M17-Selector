@@ -72,7 +72,7 @@ Requirements
 
       Make the install.sh script executable
 
-       chmod+x install.sh
+       chmod +x install.sh
 
        sudo ./install.sh
 
