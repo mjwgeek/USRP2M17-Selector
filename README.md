@@ -89,5 +89,6 @@ totime = 170000				; transmit time-out time (in ms) (optional, default 3 minutes
 
 6) Navigate to http://{your-ipaddress}/m17
    
-![M17Screenshot](https://github.com/user-attachments/assets/65832674-46e8-4dc2-b52e-dc0255f36b69)
+![image](https://github.com/user-attachments/assets/744dc092-36d5-4381-88a1-87fe7883f94a)
+
 
