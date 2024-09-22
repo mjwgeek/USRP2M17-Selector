@@ -63,6 +63,10 @@
             align-items: center;
             margin-bottom: 20px;
         }
+        .button-container {
+            text-align: center;
+            margin-top: 20px; /* Optional: add spacing above the buttons */
+        }
     </style>
 </head>
 <body>
@@ -83,12 +87,12 @@
             }
         </script>
     </select>
-	<div style="text-align: center;">
-		<button onclick="connectReflector()">Connect</button>
-		<button onclick="disconnectReflector()">Disconnect</button>
-		<button onclick="updateReflectors()">Update Reflectors</button>
-		<button onclick="location.href='Custom_Reflector.php'">Custom Reflector</button>
-	</div>
+    <div class="button-container">
+        <button onclick="connectReflector()">Connect</button>
+        <button onclick="disconnectReflector()">Disconnect</button>
+        <button onclick="updateReflectors()">Update Reflectors</button>
+        <button onclick="location.href='custom_reflector.php'">Custom Reflector</button>
+    </div>
 
     <div class="details">
         <h2>Reflector Details</h2>
@@ -102,16 +106,41 @@
         let reflectors = [];
 
         async function loadReflectors() {
-            const response = await fetch('/m17/reflector_options.txt');
-            const text = await response.text();
-            reflectors = text.split('\n').filter(line => line.trim());
+            const defaultResponse = await fetch('/m17/reflector_options.txt');
+            const defaultText = await defaultResponse.text();
+            const defaultReflectors = defaultText.split('\n').filter(line => line.trim());
+
+            let customReflectors = [];
+            try {
+                const customResponse = await fetch('/m17/custom_reflectors.txt');
+                if (customResponse.ok) {
+                    const customText = await customResponse.text();
+                    customReflectors = customText.split('\n').filter(line => line.trim());
+                }
+            } catch (error) {
+                console.warn('Error fetching custom reflectors:', error);
+            }
+
+            // Merge both arrays
+            const allReflectors = [...defaultReflectors, ...customReflectors];
+
             const select = document.getElementById('reflectorSelect');
-            reflectors.forEach(reflector => {
+            select.innerHTML = ''; // Clear existing options
+
+            if (allReflectors.length > 0) {
+                allReflectors.forEach(reflector => {
+                    const option = document.createElement('option');
+                    option.value = reflector.split(' - ')[0]; // Assuming the designator is the first part
+                    option.textContent = reflector;
+                    select.appendChild(option);
+                });
+            } else {
+                // Handle the case where there are no reflectors at all
                 const option = document.createElement('option');
-                option.value = reflector.split(' - ')[0];
-                option.textContent = reflector;
+                option.value = '';
+                option.textContent = 'No Reflectors Available';
                 select.appendChild(option);
-            });
+            }
         }
 
         async function getIniData() {

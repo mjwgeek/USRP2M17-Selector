@@ -202,4 +202,3 @@ M17-XVF - https://tarxvf.tech, no dashboard, test and dev reflector, not always 
 M17-YSF - PU5KOD (177.131.119.153) - Country: BR - URL: http://m17ysf.pu5kod.net
 M17-ZL3 - ZL3DMH (119.224.19.178) - Country: NZ - URL: https://xlx530.hopto.org/m17
 M17-ZO9 - iw9edp@gmail.com (198.245.55.177) - Country: IT - URL: https://m17zona9.duckdns.org/
-M17-CST - WG5EEK (192.168.86.999) - Country: US - URL: http://google.com

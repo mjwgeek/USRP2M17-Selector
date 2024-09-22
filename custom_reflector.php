@@ -1,4 +1,12 @@
 <?php
+// Check if the custom_reflectors.txt file exists; if not, create it
+$custom_reflector_file = 'custom_reflectors.txt';
+if (!file_exists($custom_reflector_file)) {
+    file_put_contents($custom_reflector_file, ""); // Create an empty file
+}
+
+$message = ''; // Initialize message variable
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $designator = $_POST['designator'] ?? '';
     $sponsor = $_POST['sponsor'] ?? '';
@@ -8,7 +16,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     if ($designator && $sponsor && $ip_address && $country && $url) {
         $new_reflector = "{$designator} - {$sponsor} ({$ip_address}) - Country: {$country} - URL: {$url}\n";
-        file_put_contents('reflector_options.txt', $new_reflector, FILE_APPEND | LOCK_EX);
+        file_put_contents($custom_reflector_file, $new_reflector, FILE_APPEND | LOCK_EX);
         $message = "Custom reflector added successfully!";
     } else {
         $message = "Please fill in all fields.";
@@ -49,7 +57,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 </head>
 <body>
     <h1>Add Custom Reflector</h1>
-    <?php if (isset($message)): ?>
+    <?php if ($message): ?>
         <p><?php echo $message; ?></p>
     <?php endif; ?>
     <form method="POST" action="">
