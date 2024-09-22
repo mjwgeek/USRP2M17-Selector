@@ -29,7 +29,7 @@ if ($ip_address === null) {
 
 // Build the new INI contents from the template
 $new_ini_contents = "[M17 Network]\n";
-$new_ini_contents .= "Callsign=WG5EEK {$module}\n"; // Update Callsign
+$new_ini_contents .= "Callsign=CHANGEME {$module}\n"; // Update Callsign
 $new_ini_contents .= "Address={$ip_address}\n"; // Update Address
 $new_ini_contents .= "Name={$reflector} {$module}\n"; // Update Name
 $new_ini_contents .= "LocalPort=32010\n";
