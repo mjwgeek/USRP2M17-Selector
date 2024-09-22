@@ -54,6 +54,29 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             background-color: #008000;
         }
     </style>
+    <script>
+        function checkFields() {
+            const designator = document.querySelector('input[name="designator"]').value;
+            const sponsor = document.querySelector('input[name="sponsor"]').value;
+            const ip_address = document.querySelector('input[name="ip_address"]').value;
+            const country = document.querySelector('input[name="country"]').value;
+            const url = document.querySelector('input[name="url"]').value;
+
+            const submitButton = document.querySelector('button[type="submit"]');
+
+            // Enable the button only if all fields are filled
+            submitButton.disabled = !(designator && sponsor && ip_address && country && url);
+        }
+
+        window.onload = function() {
+            // Check fields initially and on input
+            const inputs = document.querySelectorAll('input');
+            inputs.forEach(input => {
+                input.addEventListener('input', checkFields);
+            });
+            checkFields(); // Initial check
+        };
+    </script>
 </head>
 <body>
     <h1>Add Custom Reflector</h1>
@@ -66,7 +89,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <input type="text" name="ip_address" placeholder="IP Address" required>
         <input type="text" name="country" placeholder="Country" required>
         <input type="text" name="url" placeholder="URL" required>
-        <button type="submit">Add Reflector</button>
+        <button type="submit" disabled>Add Reflector</button> <!-- Initially disabled -->
     </form>
     <button onclick="location.href='index.html'">Back to Main</button>
 </body>
