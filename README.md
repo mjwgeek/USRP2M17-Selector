@@ -62,7 +62,7 @@ Requirements
 
 1) Clone the Repository
 
-       git clone https://github.com/yourusername/USRP2M17-Selector.git
+       git clone https://github.com/mjwgeek/USRP2M17-Selector.git
 
 2) Navigate to the Project Directory
 
