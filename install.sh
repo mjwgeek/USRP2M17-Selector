@@ -17,6 +17,9 @@ pip3 install requests
 # Create the web directory
 sudo mkdir -p $WEB_DIR
 
+# Copy files from the cloned repository to the web directory
+sudo cp -r * $WEB_DIR
+
 # Clone the MMDVM_CM repository
 mkdir -p $GIT_DIR
 cd $GIT_DIR || { echo "Failed to change directory"; exit 1; }
