@@ -5,7 +5,9 @@ USRP2M17-Selector Documentation
 
 Overview
 
-  This project provides a web interface for managing M17 reflectors using the USRP2M17 Bridge system.
+  This project provides a web interface for managing M17 reflectors using the USRP2M17 Bridge system.  
+
+  The install script now installs and configures USRP2M17 Bridge. 
 
 Requirements
 
