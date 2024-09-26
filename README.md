@@ -70,7 +70,7 @@ Requirements
 
        cd USRP2M17-Selector
 
-3) Run the Installation Script. The installation script will create the necessary directory structure and set permissions.
+3) Run the Installation Script. The installation script will create the necessary directory structure and set permissions.  Enter your Amateur Radio Callsign when prompted.
 
       Make the install.sh script executable
 
@@ -82,11 +82,18 @@ Requirements
 
        sudo visudo
 
-     Add the following lines at the end
+     Add the following lines at the end for AllstarLink
     
        www-data ALL=(ALL) NOPASSWD: /var/www/html/m17/update_usrp2m17.sh
 
        www-data ALL=(ALL) NOPASSWD: /bin/systemctl restart usrp2m17
+
+     Add the following lines at the end for HamVOIP
+   
+       http ALL=(ALL) NOPASSWD: /bin/systemctl restart usrp2m17
+
+       http ALL=(ALL) NOPASSWD: /var/www/html/m17/update_usrp2m17.sh
+
 
      Save and exit (Ctrl+x, hit enter, Ctrl+o)
 
