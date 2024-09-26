@@ -37,12 +37,18 @@ install_pip_requests() {
     fi
 }
 
-# Function to install packages
+# Function to install packages based on the OS
 install_packages() {
     echo "Updating package list and installing required packages..."
-    sudo pacman -Sy --noconfirm base-devel jq
-    # Ensure pip is available for both versions
-    sudo pacman -Sy --noconfirm python-pip python2-pip
+    if [ "$OS_TYPE" == "HAMVOIP" ]; then
+        # For HamVOIP, use pacman
+        sudo pacman -Sy --noconfirm base-devel jq
+        sudo pacman -Sy --noconfirm python-pip python2-pip
+    else
+        # For Allstarlink (ASL), use apt
+        sudo apt update
+        sudo apt install -y build-essential jq python3-pip python-pip-whl python2
+    fi
 }
 
 # Main Installation Process
