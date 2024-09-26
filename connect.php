@@ -9,8 +9,8 @@ $reflector = $data['reflector'];
 $module = $data['module'];
 
 $ini_file_path = '/opt/USRP2M17/USRP2M17.ini';
-$reflector_options_path = '/var/www/html/m17/reflector_options.txt';
-$custom_reflectors_path = '/var/www/html/m17/custom_reflectors.txt'; // Path to custom reflectors
+$reflector_options_path = 'reflector_options.txt';
+$custom_reflectors_path = 'custom_reflectors.txt'; // Path to custom reflectors
 
 // Fetch the IP address from the reflector options file
 $ip_address = null;
