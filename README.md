@@ -17,7 +17,7 @@ The ability to choose from a list of M17 Reflectors, and Modules, and Restart th
 
   Have AllStarLink or HamVOIP installed and running.  I've only tested this on ASL 2.0 Beta 6.  Someone please let me know if it works on ASL3 please.  I have tested it on HamVOIP but please let me know if you have issues.
 
-   *Please note that I used custom ports in my config because I'm using DVSwitch and I wanted ports that were not used by any of those supported modes so plan for that if you are using Allstarlink in your bridge.*
+   *Please note that I used custom ports in my config because I'm using DVSwitch and I wanted ports that were not used by any of those supported modes so plan for that if you are using other ports in your system.*
    If you want to use different ports, open and modify connect.php to the ports that reflect your rpt.conf node ports, reversed of course.  Here are my rpt.conf settings for node 1998 (my M17 Node).  This file is located in /etc/asterisk/
 
 ```   
