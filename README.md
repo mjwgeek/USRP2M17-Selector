@@ -54,6 +54,8 @@ The ability to choose from a list of M17 Reflectors, and Modules, and Restart th
    totime = 170000				; transmit time-out time (in ms) (optional, default 3 minutes 180000 ms
 
 ;END OF NODE 1998
+
+1998 = radio@127.0.0.1:4569/1998,NONE
 ```
 
 
