@@ -41,14 +41,15 @@ install_pip_requests() {
 install_packages() {
     echo "Updating package list and installing required packages..."
     if [ "$OS_TYPE" == "HAMVOIP" ]; then
-        # For HamVOIP, use pacman
+        # For HamVOIP, use pacman with -Syy to force a full sync if needed
         sudo pacman -Syy --noconfirm base-devel jq
         sudo pacman -Syy --noconfirm python-pip python2-pip
-        sudo pacman -Syy --noconfirm build-devel
+        sudo pacman -Syy --noconfirm gcc g++ linux-api-headers glibc glibc-devel libstdc++-devel
     else
         # For Allstarlink (ASL), use apt
         sudo apt update
         sudo apt install -y build-essential jq python3-pip python-pip-whl python2
+        sudo apt install -y g++ linux-libc-dev libc6 libc6-dev libstdc++-dev
     fi
 }
 
@@ -82,6 +83,9 @@ if [ -f "/opt/USRP2M17/USRP2M17.ini" ]; then
     echo "Deleting existing USRP2M17.ini..."
     sudo rm /opt/USRP2M17/USRP2M17.ini
 fi
+
+# Clean previous build files before compiling
+make clean
 
 # Compile the USRP2M17 code
 make
