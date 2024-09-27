@@ -91,8 +91,16 @@ The ability to choose from a list of M17 Reflectors, and Modules, and Restart th
 
        exten => 1917,1,rpt,1917
 
+AllStarLink3 Specific:  I added NODE1=1917 to [globals] like this, is it correct?  I don't know but it worked for me.  I'm new to ASL3.
+
+```
+     [globals]
+      HOMENPA = 999 ; change this to your Area Code
+      NODE = 123456   ; change this to your node number
+      NODE1 = 1917 
+```
    Save and exit (Ctrl+o, hit enter, Ctrl+x)
-   
+
 
 ### 5) Restart Asterisk
    
