@@ -3,6 +3,7 @@
 # Variables
 USRP_DIR="/opt/USRP2M17"
 GIT_DIR=~/git  # Path to the cloned repository directory
+SIGCONTEXT_FILE="/usr/include/asm/sigcontext.h"  # Path to the sigcontext.h file
 
 # Determine the OS type based on the kernel version
 KERNEL_VERSION=$(uname -r)
@@ -18,39 +19,53 @@ fi
 
 echo "Operating system type determined: $OS_TYPE"  # Debugging output
 
+# Function to install pip for Python 3.5 (if pip is not installed)
+install_pip() {
+    echo "Checking and installing pip for Python 3.5..."
+    if ! command -v pip3 &> /dev/null; then
+        wget https://bootstrap.pypa.io/pip/3.5/get-pip.py
+        python3 get-pip.py
+    else
+        echo "pip3 is already installed."
+    fi
+}
+
 # Function to check and install pip requests
 install_pip_requests() {
-    # Install requests for Python 2.7
-    if command -v python2 &> /dev/null; then
-        echo "Installing requests for Python 2.7..."
-        python2 -m pip install requests
-    else
-        echo "Python 2.7 is not installed."
-    fi
-
-    # Install requests for Python 3 (generic command works for both HamVOIP and ASL)
-    if command -v pip &> /dev/null; then
-        echo "Installing requests for Python 3..."
-        pip install requests
-    else
-        echo "pip for Python 3 is not installed."
-    fi
+    echo "Installing Python requests..."
+    pip3 install requests
 }
 
 # Function to install packages based on the OS
 install_packages() {
     echo "Updating package list and installing required packages..."
     if [ "$OS_TYPE" == "HAMVOIP" ]; then
-        # For HamVOIP, use pacman with -Syy to force a full sync if needed
-        sudo pacman -Syy --noconfirm base-devel jq
-        sudo pacman -Syy --noconfirm python-pip python2-pip
-        sudo pacman -Syy --noconfirm gcc g++ linux-api-headers glibc glibc-devel libstdc++-devel
+        # Install pip using get-pip.py if not already installed
+        install_pip
     else
         # For Allstarlink (ASL), use apt
         sudo apt update
         sudo apt install -y build-essential jq python3-pip python-pip-whl python2
         sudo apt install -y g++ linux-libc-dev libc6 libc6-dev libstdc++-dev
     fi
+}
+
+# Function to backup the original sigcontext.h file
+backup_sigcontext() {
+    echo "Backing up the original sigcontext.h..."
+    sudo cp "$SIGCONTEXT_FILE" "${SIGCONTEXT_FILE}.bak"
+}
+
+# Function to modify sigcontext.h
+modify_sigcontext() {
+    echo "Modifying sigcontext.h to use uint64_t instead of __uint128_t..."
+    sudo sed -i 's/__uint128_t/uint64_t/' "$SIGCONTEXT_FILE"
+}
+
+# Function to revert sigcontext.h to its original state
+revert_sigcontext() {
+    echo "Reverting sigcontext.h to its original state..."
+    sudo mv "${SIGCONTEXT_FILE}.bak" "$SIGCONTEXT_FILE"
 }
 
 # Main Installation Process
@@ -78,21 +93,22 @@ cd MMDVM_CM/USRP2M17 || { echo "Failed to change directory"; exit 1; }
 # Stop the USRP2M17 service if it's running
 sudo systemctl stop usrp2m17.service
 
-# Delete the existing USRP2M17.ini file to avoid conflicts
-if [ -f "/opt/USRP2M17/USRP2M17.ini" ]; then
-    echo "Deleting existing USRP2M17.ini..."
-    sudo rm /opt/USRP2M17/USRP2M17.ini
-fi
+# Backup the sigcontext.h file
+backup_sigcontext
 
-# Clean previous build files before compiling
-make clean
+# Modify the sigcontext.h file
+modify_sigcontext
 
 # Compile the USRP2M17 code
 make
 if [ $? -ne 0 ]; then
-    echo "Errors occurred during compilation. Please resolve them before continuing."
+    echo "Errors occurred during compilation. Reverting sigcontext.h and exiting."
+    revert_sigcontext
     exit 1
 fi
+
+# Revert the sigcontext.h file after compiling
+revert_sigcontext
 
 # Create necessary directories
 sudo mkdir -p $USRP_DIR
@@ -190,7 +206,4 @@ sudo systemctl start usrp2m17.service
 # Enable the service to start on boot
 sudo systemctl enable usrp2m17.service
 
-# Delete the git directory
-rm -rf $GIT_DIR
-
-echo "Installation complete and git directory removed."
+echo "Installation complete."
