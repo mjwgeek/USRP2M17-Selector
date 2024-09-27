@@ -80,7 +80,7 @@ The ability to choose from a list of M17 Reflectors, and Modules, and Restart th
 
        sudo visudo
 
-     Add the following lines at the end for AllstarLink
+     Add the following lines at the end for AllStarLink
     
        www-data ALL=(ALL) NOPASSWD: /var/www/html/m17/update_usrp2m17.sh
 
