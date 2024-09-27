@@ -42,9 +42,9 @@ install_packages() {
     echo "Updating package list and installing required packages..."
     if [ "$OS_TYPE" == "HAMVOIP" ]; then
         # For HamVOIP, use pacman
-        sudo pacman -Sy --noconfirm base-devel jq
-        sudo pacman -Sy --noconfirm python-pip python2-pip
-        sudo pacman -Sy --noconfirm build-devel
+        sudo pacman -Syy --noconfirm base-devel jq
+        sudo pacman -Syy --noconfirm python-pip python2-pip
+        sudo pacman -Syy --noconfirm build-devel
     else
         # For Allstarlink (ASL), use apt
         sudo apt update
