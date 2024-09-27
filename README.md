@@ -15,7 +15,7 @@ The ability to choose from a list of M17 Reflectors, and Modules, and Restart th
    Add a custom node to use for M17 traffic.
 
    *Please note that I used custom ports in my config because I'm using DVSwitch and I wanted ports that were not used by any of those supported modes so plan for that if you are using other ports in your system.*
-   If you want to use different ports, open and modify connect.php to the ports that reflect your rpt.conf node ports, reversed of course.  Here are my rpt.conf settings for node 1998 (my M17 Node).  This file is located in /etc/asterisk/
+   If you want to use different ports, open and modify connect.php to the ports that reflect your rpt.conf node ports, reversed of course.  Here are my rpt.conf settings for node 1917 (my M17 Node).  This file is located in /etc/asterisk/
 
   
  ## Asterisk Setup for Custom M17 Node
