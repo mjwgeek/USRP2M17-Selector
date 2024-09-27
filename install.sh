@@ -44,6 +44,7 @@ install_packages() {
         # For HamVOIP, use pacman
         sudo pacman -Sy --noconfirm base-devel jq
         sudo pacman -Sy --noconfirm python-pip python2-pip
+        sudo pacman -Sy --noconfirm build-devel
     else
         # For Allstarlink (ASL), use apt
         sudo apt update
