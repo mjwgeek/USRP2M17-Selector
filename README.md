@@ -1,4 +1,5 @@
 # USRP2M17-Selector
+
 The ability to choose from a list of M17 Reflectors, and Modules, and Restart the USRP2M17 Service via a web application
 
 ## Overview
@@ -9,19 +10,23 @@ The ability to choose from a list of M17 Reflectors, and Modules, and Restart th
 
 ## Requirements
 
-  A web server (Apache or similar)
+   Have AllStarLink or HamVOIP installed and running.  I've only tested this on ASL 2.0 Beta 6.  Someone please let me know if it works on ASL3 please.  I have tested it on HamVOIP but please let me know if you have issues.
 
-  PHP
-
-  Python 3
-
-  Have AllStarLink or HamVOIP installed and running.  I've only tested this on ASL 2.0 Beta 6.  Someone please let me know if it works on ASL3 please.  I have tested it on HamVOIP but please let me know if you have issues.
+   Add a custom node to use for M17 traffic
 
    *Please note that I used custom ports in my config because I'm using DVSwitch and I wanted ports that were not used by any of those supported modes so plan for that if you are using other ports in your system.*
    If you want to use different ports, open and modify connect.php to the ports that reflect your rpt.conf node ports, reversed of course.  Here are my rpt.conf settings for node 1998 (my M17 Node).  This file is located in /etc/asterisk/
 
+  
+ ## Asterisk Setup for Custom M17 Node
+ 
+  ### 1)  Edit rpt.conf
+     
+          nano /etc/asterisk/rpt.conf
+
+  Copy this into your file
 ```   
-[1998]
+[1917]
 
    rxchannel = USRP/127.0.0.1:34008:32008  ; Use the USRP channel driver. Must be enabled in modules.conf
  
@@ -51,16 +56,51 @@ The ability to choose from a list of M17 Reflectors, and Modules, and Restart th
 
    nounkeyct = 1				; Set to a 1 to eliminate courtesy tones and associated delays.
 
-   totime = 170000				; transmit time-out time (in ms) (optional, default 3 minutes 180000 ms
+   tx_timeout = 170000				; transmit time-out time (in ms) (optional, default 3 minutes 180000 ms
 
-;END OF NODE 1998
+;END OF NODE 1917
 
-1998 = radio@127.0.0.1:4569/1998,NONE
 ```
+   Now add this to your [nodes] stanza like this:
+```
+[nodes]
+; Note, if you are using automatic updates for allstar link nodes,
+; no allstar link nodes should be defined here. Only place a definition
+; for your local (within your LAN) nodes, and private (off of allstar
+; link) nodes here.
 
+12345 = radio@127.0.0.1/12345,NONE  //This will already be your current node number so don't change it 
+1917 = radio@127.0.0.1/1917,NONE  //Add this one for M17
+```
+  
+  Save and exit (Ctrl+o, hit enter, Ctrl+x)
 
+   
+### 2) Enable the USRP module:
 
-## Installation Instructions
+       nano /etc/asterisk/modules.conf
+   Change noload=chan_usrp.so to load=chan_usrp.so
+
+   Save and exit (Ctrl+o, hit enter, Ctrl+x)
+   
+
+### 4) Add new 1917 node to extensions.conf
+
+       nano /etc/asterisk/extensions.conf
+   Add this to the [radio-secure] stanza:
+
+       exten => 1917,1,rpt,1917
+
+   Save and exit (Ctrl+o, hit enter, Ctrl+x)
+   
+
+### 5) Restart Asterisk
+   
+       astres.sh
+
+### 6) To see your new node in Supermon, Allmon2, follow those specific instructions, that goes beyond the scope of this project but it typically involves editing allmon.ini for Supermon or allmon.ini.php for allmon2 located in their respective directories in /var/www/html/ for AllStarLink or /srv/http/ for HamVOIP
+   
+## Installing USRP2M17 and the Selector
 
 1) Clone the Repository
 
@@ -80,6 +120,8 @@ The ability to choose from a list of M17 Reflectors, and Modules, and Restart th
 
 4) Updating visudo
 
+    A) For Allstarlink
+
        sudo visudo
 
      Add the following lines at the end for AllStarLink
@@ -88,7 +130,11 @@ The ability to choose from a list of M17 Reflectors, and Modules, and Restart th
 
        www-data ALL=(ALL) NOPASSWD: /bin/systemctl restart usrp2m17
 
-     Add the following lines at the end for HamVOIP
+   B) For HamVOIP
+
+       sudo EDITOR=nano visudo
+
+   Add the following lines at the end for HamVOIP
    
        http ALL=(ALL) NOPASSWD: /bin/systemctl restart usrp2m17
 
@@ -97,6 +143,7 @@ The ability to choose from a list of M17 Reflectors, and Modules, and Restart th
 
      Save and exit (Ctrl+o, hit enter, Ctrl+x)
 
+  
 6) Navigate to http://{your-ipaddress}/m17
    
 ![image](https://github.com/user-attachments/assets/744dc092-36d5-4381-88a1-87fe7883f94a)
