@@ -95,7 +95,7 @@ The ability to choose from a list of M17 Reflectors, and Modules, and Restart th
        http ALL=(ALL) NOPASSWD: /var/www/html/m17/update_usrp2m17.sh
 
 
-     Save and exit (Ctrl+x, hit enter, Ctrl+o)
+     Save and exit (Ctrl+o, hit enter, Ctrl+x)
 
 6) Navigate to http://{your-ipaddress}/m17
    
