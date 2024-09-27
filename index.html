@@ -27,7 +27,7 @@
             padding: 5px;
         }
         button {
-            padding: 8px 12px;
+            padding: 8px 12px; /* Adjusted size */
             background-color: #00ff00;
             border: none;
             color: black;
@@ -49,8 +49,8 @@
             background-color: #222;
             padding: 10px;
             border-radius: 8px;
-            max-width: 300px;
-            min-width: 250px;
+            max-width: 300px; /* Set maximum width */
+            min-width: 250px; /* Set minimum width */
             text-align: left;
             box-shadow: 0 0 15px rgba(0, 255, 0, 0.5);
             transition: box-shadow 0.3s;
@@ -65,25 +65,7 @@
         }
         .button-container {
             text-align: center;
-            margin-top: 20px;
-        }
-        .github-link {
-            margin-top: 20px;
-            color: #00ff00;
-        }
-        .github-link a {
-            color: red; /* Changed color to red */
-            text-decoration: none;
-        }
-        .github-link a:hover {
-            text-decoration: underline;
-        }
-        #url a {
-            color: red; /* Changed color to red */
-            text-decoration: none;
-        }
-        #url a:hover {
-            text-decoration: underline;
+            margin-top: 20px; /* Optional: add spacing above the buttons */
         }
     </style>
 </head>
@@ -118,10 +100,6 @@
         <p>IP Address: <span id="ipAddress">N/A</span></p>
         <p>Callsign: <span id="callsign">N/A</span></p>
         <p>URL: <a id="url" href="#">N/A</a></p>
-    </div>
-
-    <div class="github-link">
-        <p>Check out the project on <a href="https://github.com/mjwgeek/USRP2M17-Selector" target="_blank">GitHub</a></p>
     </div>
 
     <script>
