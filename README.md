@@ -1,15 +1,13 @@
 # USRP2M17-Selector
 The ability to choose from a list of M17 Reflectors, and Modules, and Restart the USRP2M17 Service via a web application
 
-USRP2M17-Selector Documentation
-
-Overview
+## Overview
 
   This project provides a web interface for managing M17 reflectors using the USRP2M17 Bridge system.  
 
-  The install script now installs and configures USRP2M17 Bridge. 
+  The install script now installs and configures USRP2M17 Bridge and should work on AllStarlink 2 and HamVOIP.
 
-Requirements
+## Requirements
 
   A web server (Apache or similar)
 
