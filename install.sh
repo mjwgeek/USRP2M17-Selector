@@ -19,53 +19,54 @@ fi
 
 echo "Operating system type determined: $OS_TYPE"  # Debugging output
 
-# Function to install pip for Python 3.5 (if pip is not installed)
-install_pip() {
-    echo "Checking and installing pip for Python 3.5..."
-    if ! command -v pip3 &> /dev/null; then
-        wget https://bootstrap.pypa.io/pip/3.5/get-pip.py
-        python3 get-pip.py
-    else
-        echo "pip3 is already installed."
-    fi
-}
-
-# Function to check and install pip requests
+# Function to install requests for Python 3
 install_pip_requests() {
-    echo "Installing Python requests..."
-    pip3 install requests
+    if [ "$OS_TYPE" == "ALLSTARLINK" ]; then
+        echo "Installing requests for Python 3 via apt..."
+        sudo apt install -y python3-requests
+    elif command -v pip3 &> /dev/null; then
+        echo "Installing requests for Python 3 via pip..."
+        pip3 install requests
+    else
+        echo "pip3 is not installed."
+    fi
 }
 
 # Function to install packages based on the OS
 install_packages() {
     echo "Updating package list and installing required packages..."
     if [ "$OS_TYPE" == "HAMVOIP" ]; then
-        # Install pip using get-pip.py if not already installed
-        install_pip
+        # For HamVOIP, use pacman with -Syy to force a full sync if needed
+        sudo pacman -Syy --noconfirm python-pip
     else
-        # For Allstarlink (ASL), use apt
+        # For Allstarlink (ASL), use apt and skip Python 2 installation
         sudo apt update
-        sudo apt install -y build-essential jq python3-pip python-pip-whl python2
-        sudo apt install -y g++ linux-libc-dev libc6 libc6-dev libstdc++-dev
+        sudo apt install -y build-essential jq python3-pip g++ linux-libc-dev libc6 libc6-dev libstdc++-12-dev
     fi
 }
 
-# Function to backup the original sigcontext.h file
+# Function to backup the original sigcontext.h file for HamVOIP
 backup_sigcontext() {
-    echo "Backing up the original sigcontext.h..."
-    sudo cp "$SIGCONTEXT_FILE" "${SIGCONTEXT_FILE}.bak"
+    if [ "$OS_TYPE" == "HAMVOIP" ]; then
+        echo "Backing up the original sigcontext.h..."
+        sudo cp "$SIGCONTEXT_FILE" "${SIGCONTEXT_FILE}.bak"
+    fi
 }
 
-# Function to modify sigcontext.h
+# Function to modify sigcontext.h for HamVOIP
 modify_sigcontext() {
-    echo "Modifying sigcontext.h to use uint64_t instead of __uint128_t..."
-    sudo sed -i 's/__uint128_t/uint64_t/' "$SIGCONTEXT_FILE"
+    if [ "$OS_TYPE" == "HAMVOIP" ]; then
+        echo "Modifying sigcontext.h to use uint64_t instead of __uint128_t..."
+        sudo sed -i 's/__uint128_t/uint64_t/' "$SIGCONTEXT_FILE"
+    fi
 }
 
-# Function to revert sigcontext.h to its original state
+# Function to revert sigcontext.h to its original state for HamVOIP
 revert_sigcontext() {
-    echo "Reverting sigcontext.h to its original state..."
-    sudo mv "${SIGCONTEXT_FILE}.bak" "$SIGCONTEXT_FILE"
+    if [ "$OS_TYPE" == "HAMVOIP" ]; then
+        echo "Reverting sigcontext.h to its original state..."
+        sudo mv "${SIGCONTEXT_FILE}.bak" "$SIGCONTEXT_FILE"
+    fi
 }
 
 # Main Installation Process
@@ -93,10 +94,8 @@ cd MMDVM_CM/USRP2M17 || { echo "Failed to change directory"; exit 1; }
 # Stop the USRP2M17 service if it's running
 sudo systemctl stop usrp2m17.service
 
-# Backup the sigcontext.h file
+# Backup and modify the sigcontext.h file for HamVOIP
 backup_sigcontext
-
-# Modify the sigcontext.h file
 modify_sigcontext
 
 # Compile the USRP2M17 code
@@ -107,7 +106,7 @@ if [ $? -ne 0 ]; then
     exit 1
 fi
 
-# Revert the sigcontext.h file after compiling
+# Revert the sigcontext.h file after compiling for HamVOIP
 revert_sigcontext
 
 # Create necessary directories
@@ -161,8 +160,6 @@ fi
 if [ "$OS_TYPE" == "HAMVOIP" ]; then
     # For HamVOIP, set specific ownership and permissions
     echo "Setting permissions for HamVOIP..."
-
-    # Set ownership and permissions for the relevant files
     sudo chown http:http /srv/http/m17/reflector_options.txt
     sudo chown http:http /srv/http/m17/custom_reflectors.txt
     sudo chown http:http /opt/USRP2M17/USRP2M17.ini
