@@ -3,7 +3,6 @@
 # Variables
 USRP_DIR="/opt/USRP2M17"
 GIT_DIR=~/git  # Path to the cloned repository directory
-SIGCONTEXT_FILE="/usr/include/asm/sigcontext.h"  # Path to the sigcontext.h file
 
 # Determine the OS type based on the kernel version
 KERNEL_VERSION=$(uname -r)
@@ -19,16 +18,22 @@ fi
 
 echo "Operating system type determined: $OS_TYPE"  # Debugging output
 
-# Function to install requests for Python 3
+# Function to check and install pip requests
 install_pip_requests() {
-    if [ "$OS_TYPE" == "ALLSTARLINK" ]; then
-        echo "Installing requests for Python 3 via apt..."
-        sudo apt install -y python3-requests
-    elif command -v pip3 &> /dev/null; then
-        echo "Installing requests for Python 3 via pip..."
-        pip3 install requests
+    # Install requests for Python 2.7
+    if command -v python2 &> /dev/null; then
+        echo "Installing requests for Python 2.7..."
+        python2 -m pip install requests
     else
-        echo "pip3 is not installed."
+        echo "Python 2.7 is not installed."
+    fi
+
+    # Install requests for Python 3 (generic command works for both HamVOIP and ASL)
+    if command -v pip &> /dev/null; then
+        echo "Installing requests for Python 3..."
+        pip install requests
+    else
+        echo "pip for Python 3 is not installed."
     fi
 }
 
@@ -36,36 +41,13 @@ install_pip_requests() {
 install_packages() {
     echo "Updating package list and installing required packages..."
     if [ "$OS_TYPE" == "HAMVOIP" ]; then
-        # For HamVOIP, use pacman with -Syy to force a full sync if needed
-        sudo pacman -Syy --noconfirm python-pip
+        # For HamVOIP, use pacman
+        sudo pacman -Sy --noconfirm base-devel jq
+        sudo pacman -Sy --noconfirm python-pip python2-pip
     else
-        # For Allstarlink (ASL), use apt and skip Python 2 installation
+        # For Allstarlink (ASL), use apt
         sudo apt update
-        sudo apt install -y build-essential jq python3-pip g++ linux-libc-dev libc6 libc6-dev libstdc++-12-dev
-    fi
-}
-
-# Function to backup the original sigcontext.h file for HamVOIP
-backup_sigcontext() {
-    if [ "$OS_TYPE" == "HAMVOIP" ]; then
-        echo "Backing up the original sigcontext.h..."
-        sudo cp "$SIGCONTEXT_FILE" "${SIGCONTEXT_FILE}.bak"
-    fi
-}
-
-# Function to modify sigcontext.h for HamVOIP
-modify_sigcontext() {
-    if [ "$OS_TYPE" == "HAMVOIP" ]; then
-        echo "Modifying sigcontext.h to use uint64_t instead of __uint128_t..."
-        sudo sed -i 's/__uint128_t/uint64_t/' "$SIGCONTEXT_FILE"
-    fi
-}
-
-# Function to revert sigcontext.h to its original state for HamVOIP
-revert_sigcontext() {
-    if [ "$OS_TYPE" == "HAMVOIP" ]; then
-        echo "Reverting sigcontext.h to its original state..."
-        sudo mv "${SIGCONTEXT_FILE}.bak" "$SIGCONTEXT_FILE"
+        sudo apt install -y build-essential jq python3-pip python-pip-whl python2
     fi
 }
 
@@ -94,20 +76,18 @@ cd MMDVM_CM/USRP2M17 || { echo "Failed to change directory"; exit 1; }
 # Stop the USRP2M17 service if it's running
 sudo systemctl stop usrp2m17.service
 
-# Backup and modify the sigcontext.h file for HamVOIP
-backup_sigcontext
-modify_sigcontext
+# Delete the existing USRP2M17.ini file to avoid conflicts
+if [ -f "/opt/USRP2M17/USRP2M17.ini" ]; then
+    echo "Deleting existing USRP2M17.ini..."
+    sudo rm /opt/USRP2M17/USRP2M17.ini
+fi
 
 # Compile the USRP2M17 code
 make
 if [ $? -ne 0 ]; then
-    echo "Errors occurred during compilation. Reverting sigcontext.h and exiting."
-    revert_sigcontext
+    echo "Errors occurred during compilation. Please resolve them before continuing."
     exit 1
 fi
-
-# Revert the sigcontext.h file after compiling for HamVOIP
-revert_sigcontext
 
 # Create necessary directories
 sudo mkdir -p $USRP_DIR
@@ -160,6 +140,8 @@ fi
 if [ "$OS_TYPE" == "HAMVOIP" ]; then
     # For HamVOIP, set specific ownership and permissions
     echo "Setting permissions for HamVOIP..."
+
+    # Set ownership and permissions for the relevant files
     sudo chown http:http /srv/http/m17/reflector_options.txt
     sudo chown http:http /srv/http/m17/custom_reflectors.txt
     sudo chown http:http /opt/USRP2M17/USRP2M17.ini
@@ -203,4 +185,7 @@ sudo systemctl start usrp2m17.service
 # Enable the service to start on boot
 sudo systemctl enable usrp2m17.service
 
-echo "Installation complete."
+# Delete the git directory
+rm -rf $GIT_DIR
+
+echo "Installation complete and git directory removed."
