@@ -6,7 +6,7 @@ $ini_file_path = '/opt/USRP2M17/USRP2M17.ini';
 // Build the new INI contents to disconnect
 $new_ini_contents = "[M17 Network]\n";
 $new_ini_contents .= "Callsign=DISCONNECT\n"; // Set Callsign to DISCONNECT
-$new_ini_contents .= "Address=DISCONNECT\n"; // Set Address to 0.0.0.0
+$new_ini_contents .= "Address=DISCONNECT\n"; // Set Address to DISCONNECT
 $new_ini_contents .= "Name=DISCONNECT\n"; // Set Name to DISCONNECT
 $new_ini_contents .= "LocalPort=32010\n";
 $new_ini_contents .= "DstPort=17000\n";
