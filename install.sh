@@ -120,8 +120,8 @@ Debug=0
 
 [Log]
 DisplayLevel=0
-FileLevel=1
-FilePath=/var/log/usrp/
+FileLevel=0
+FilePath=/var/log/
 FileRoot=USRP2M17
 EOF
 
