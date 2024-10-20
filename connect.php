@@ -60,8 +60,8 @@ $new_ini_contents .= "GainAdjustdB=3\n";
 $new_ini_contents .= "Debug=0\n";
 $new_ini_contents .= "[Log]\n";
 $new_ini_contents .= "DisplayLevel=0\n";
-$new_ini_contents .= "FileLevel=1\n";
-$new_ini_contents .= "FilePath=/var/log/usrp/\n";
+$new_ini_contents .= "FileLevel=0\n";
+$new_ini_contents .= "FilePath=/var/log/\n";
 $new_ini_contents .= "FileRoot=USRP2M17\n";
 
 // Write the new content back to the INI file
