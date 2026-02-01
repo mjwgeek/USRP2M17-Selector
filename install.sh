@@ -180,14 +180,24 @@ SYSTEMD_SERVICE="/usr/lib/systemd/system/usrp2m17.service"
 cat << EOF | sudo tee $SYSTEMD_SERVICE > /dev/null
 [Unit]
 Description=USRP2M17 Service
+After=network-online.target
+Wants=network-online.target
+StartLimitIntervalSec=0
 
 [Service]
 Type=simple
-Restart=on-failure
-RestartSec=3
 ExecStart=/opt/USRP2M17/USRP2M17 /opt/USRP2M17/USRP2M17.ini
-ExecReload=/bin/kill -HUP \$MAINPID
+
+Restart=always
+RestartSec=5
+
+# Helpful for debugging + avoids weird buffering
+StandardOutput=journal
+StandardError=journal
+
+# Give it a clean shutdown
 KillMode=process
+TimeoutStopSec=10
 
 [Install]
 WantedBy=multi-user.target
