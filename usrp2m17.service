@@ -1,0 +1,23 @@
+[Unit]
+Description=USRP2M17 Service
+After=network-online.target
+Wants=network-online.target
+StartLimitIntervalSec=0
+
+[Service]
+Type=simple
+ExecStart=/opt/USRP2M17/USRP2M17 /opt/USRP2M17/USRP2M17.ini
+
+Restart=always
+RestartSec=5
+
+# Helpful for debugging + avoids weird buffering
+StandardOutput=journal
+StandardError=journal
+
+# Give it a clean shutdown
+KillMode=process
+TimeoutStopSec=10
+
+[Install]
+WantedBy=multi-user.target
