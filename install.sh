@@ -133,19 +133,16 @@ revert_sigcontext() {
 patch_cpp_headers() {
     echo "Checking C++ headers for Debian 13/compiler compatibility..."
 
-    if [ -f Conf.h ]; then
-        if ! grep -q '#include <cstdint>' Conf.h; then
-            echo "Adding #include <cstdint> to Conf.h..."
-            sed -i '/#include/a #include <cstdint>' Conf.h
-        fi
-    fi
+    for file in *.h *.cpp; do
+        [ -f "$file" ] || continue
 
-    if [ -f Conf.cpp ]; then
-        if ! grep -q '#include <cstdint>' Conf.cpp; then
-            echo "Adding #include <cstdint> to Conf.cpp..."
-            sed -i '/#include/a #include <cstdint>' Conf.cpp
+        if grep -Eq 'uint8_t|uint16_t|uint32_t|uint64_t|int8_t|int16_t|int32_t|int64_t' "$file"; then
+            if ! grep -q '#include <cstdint>' "$file"; then
+                echo "Adding #include <cstdint> to $file..."
+                sed -i '1i #include <cstdint>' "$file"
+            fi
         fi
-    fi
+    done
 }
 
 clone_mmdvm_cm() {
