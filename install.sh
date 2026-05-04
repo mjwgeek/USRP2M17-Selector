@@ -1,127 +1,179 @@
 #!/bin/bash
 
+set -u
+
 # Variables
 USRP_DIR="/opt/USRP2M17"
-GIT_DIR=~/git  # Path to the cloned repository directory
-SIGCONTEXT_FILE="/usr/include/asm/sigcontext.h"  # Path to the sigcontext.h file
+GIT_DIR="$HOME/git"
+MMDVM_DIR="$GIT_DIR/MMDVM_CM"
+SIGCONTEXT_FILE="/usr/include/asm/sigcontext.h"
 
-# Determine the OS type based on the kernel version
+# Determine OS/kernel info
 KERNEL_VERSION=$(uname -r)
-echo "Detected kernel version: $KERNEL_VERSION"  # Debugging output
+echo "Detected kernel version: $KERNEL_VERSION"
+
+OS_TYPE=""
+WEB_DIR=""
+DEBIAN_VERSION_ID=""
+DEBIAN_CODENAME=""
+
+if [ -f /etc/os-release ]; then
+    . /etc/os-release
+    DEBIAN_VERSION_ID="${VERSION_ID:-}"
+    DEBIAN_CODENAME="${VERSION_CODENAME:-}"
+fi
 
 if [[ "$KERNEL_VERSION" == *"ARCH"* ]]; then
     OS_TYPE="HAMVOIP"
-    WEB_DIR="/srv/http/m17"  # HamVOIP web directory
+    WEB_DIR="/srv/http/m17"
 else
     OS_TYPE="ALLSTARLINK"
-    WEB_DIR="/var/www/html/m17"  # ASL web directory
+    WEB_DIR="/var/www/html/m17"
 fi
 
-echo "Operating system type determined: $OS_TYPE"  # Debugging output
+echo "Operating system type determined: $OS_TYPE"
 
-# Function to check and install pip requests
-install_pip_requests() {
-    # Install requests for Python 2.7
-    if command -v python2 &> /dev/null; then
-        echo "Installing requests for Python 2.7..."
-        python2 -m pip install requests
-    else
-        echo "Python 2.7 is not installed."
-    fi
+if [ -n "$DEBIAN_VERSION_ID" ]; then
+    echo "Detected Debian version: $DEBIAN_VERSION_ID ${DEBIAN_CODENAME}"
+fi
 
-    # Install requests for Python 3 (generic command works for both HamVOIP and ASL)
-    if command -v pip &> /dev/null; then
-        echo "Installing requests for Python 3..."
-        pip install requests
-    else
-        echo "pip for Python 3 is not installed."
-    fi
+is_debian_13() {
+    [ "$OS_TYPE" = "ALLSTARLINK" ] && { [ "$DEBIAN_VERSION_ID" = "13" ] || [ "$DEBIAN_CODENAME" = "trixie" ]; }
 }
 
-# Function to install packages based on the OS
 install_packages() {
     echo "Updating package list and installing required packages..."
-    if [ "$OS_TYPE" == "HAMVOIP" ]; then
-        sudo pacman -Sy --noconfirm base-devel jq
-        sudo pacman -Sy --noconfirm python-pip python2-pip
+
+    if [ "$OS_TYPE" = "HAMVOIP" ]; then
+        pacman -Sy --noconfirm base-devel jq git
+        pacman -Sy --noconfirm python-pip python2-pip
     else
-        sudo apt update
-        sudo apt install -y build-essential jq python3-pip python-pip-whl python2
+        apt update
+
+        if is_debian_13; then
+            echo "Using Debian 13/Trixie compatible package list..."
+            apt install -y \
+                build-essential \
+                git \
+                jq \
+                python3 \
+                python3-pip \
+                python3-requests
+        else
+            echo "Using legacy Debian/ASL compatible package list..."
+            apt install -y \
+                build-essential \
+                git \
+                jq \
+                python3 \
+                python3-pip \
+                python3-requests
+
+            # Try legacy packages only if available.
+            if apt-cache show python2 >/dev/null 2>&1; then
+                apt install -y python2
+            else
+                echo "python2 package not available; skipping."
+            fi
+
+            if apt-cache show python-pip-whl >/dev/null 2>&1; then
+                apt install -y python-pip-whl
+            else
+                echo "python-pip-whl package not available; skipping."
+            fi
+        fi
     fi
 }
 
-# Function to backup the original sigcontext.h file
+install_pip_requests() {
+    if [ "$OS_TYPE" = "HAMVOIP" ]; then
+        if command -v python2 >/dev/null 2>&1; then
+            echo "Installing requests for Python 2.7..."
+            python2 -m pip install requests || true
+        fi
+
+        if command -v pip >/dev/null 2>&1; then
+            echo "Installing requests for Python 3..."
+            pip install requests || true
+        fi
+    else
+        echo "Using Debian-packaged python3-requests; skipping system-wide pip install."
+    fi
+}
+
 backup_sigcontext() {
-    echo "Backing up the original sigcontext.h..."
-    sudo cp "$SIGCONTEXT_FILE" "${SIGCONTEXT_FILE}.bak"
+    if [ -f "$SIGCONTEXT_FILE" ]; then
+        echo "Backing up the original sigcontext.h..."
+        cp "$SIGCONTEXT_FILE" "${SIGCONTEXT_FILE}.bak"
+        return 0
+    else
+        echo "sigcontext.h not found at $SIGCONTEXT_FILE; skipping backup."
+        return 1
+    fi
 }
 
-# Function to modify sigcontext.h
 modify_sigcontext() {
-    echo "Modifying sigcontext.h to use uint64_t instead of __uint128_t..."
-    sudo sed -i 's/__uint128_t/uint64_t/' "$SIGCONTEXT_FILE"
+    if [ -f "$SIGCONTEXT_FILE" ]; then
+        echo "Modifying sigcontext.h to use uint64_t instead of __uint128_t..."
+        sed -i 's/__uint128_t/uint64_t/g' "$SIGCONTEXT_FILE"
+    else
+        echo "sigcontext.h not found; skipping modification."
+    fi
 }
 
-# Function to revert sigcontext.h to its original state
 revert_sigcontext() {
-    echo "Reverting sigcontext.h to its original state..."
-    sudo mv "${SIGCONTEXT_FILE}.bak" "$SIGCONTEXT_FILE"
+    if [ -f "${SIGCONTEXT_FILE}.bak" ]; then
+        echo "Reverting sigcontext.h to its original state..."
+        mv "${SIGCONTEXT_FILE}.bak" "$SIGCONTEXT_FILE"
+    else
+        echo "No sigcontext.h backup found; nothing to revert."
+    fi
 }
 
-# Main Installation Process
-echo "Starting installation for $OS_TYPE..."
+patch_cpp_headers() {
+    echo "Checking C++ headers for Debian 13/compiler compatibility..."
 
-# Update package list and install required packages
-install_packages
+    if [ -f Conf.h ]; then
+        if ! grep -q '#include <cstdint>' Conf.h; then
+            echo "Adding #include <cstdint> to Conf.h..."
+            sed -i '/#include/a #include <cstdint>' Conf.h
+        fi
+    fi
 
-# Install pip requests
-install_pip_requests
+    if [ -f Conf.cpp ]; then
+        if ! grep -q '#include <cstdint>' Conf.cpp; then
+            echo "Adding #include <cstdint> to Conf.cpp..."
+            sed -i '/#include/a #include <cstdint>' Conf.cpp
+        fi
+    fi
+}
 
-# Create the web directory
-sudo mkdir -p $WEB_DIR
+clone_mmdvm_cm() {
+    mkdir -p "$GIT_DIR"
+    cd "$GIT_DIR" || {
+        echo "Failed to change directory to $GIT_DIR"
+        exit 1
+    }
 
-# Copy files from the cloned repository to the web directory
-sudo cp -r * $WEB_DIR
+    if [ -d "$MMDVM_DIR/.git" ]; then
+        echo "MMDVM_CM already exists; updating existing clone..."
+        cd "$MMDVM_DIR" || exit 1
+        git pull
+    else
+        if [ -d "$MMDVM_DIR" ]; then
+            echo "Removing incomplete existing MMDVM_CM directory..."
+            rm -rf "$MMDVM_DIR"
+        fi
 
-# Clone the MMDVM_CM repository
-mkdir -p $GIT_DIR
-cd $GIT_DIR || { echo "Failed to change directory"; exit 1; }
-git clone https://github.com/nostar/MMDVM_CM.git
+        echo "Cloning MMDVM_CM..."
+        git clone https://github.com/nostar/MMDVM_CM.git
+    fi
+}
 
-cd MMDVM_CM/USRP2M17 || { echo "Failed to change directory"; exit 1; }
+create_ini_file() {
+    read -p "Enter your callsign: " callsign
 
-# Stop the USRP2M17 service if it's running
-sudo systemctl stop usrp2m17.service
-
-# Backup the sigcontext.h file
-backup_sigcontext
-
-# Modify the sigcontext.h file
-modify_sigcontext
-
-# Compile the USRP2M17 code
-make
-if [ $? -ne 0 ]; then
-    echo "Errors occurred during compilation. Reverting sigcontext.h and exiting."
-    revert_sigcontext
-    exit 1
-fi
-
-# Revert the sigcontext.h file after compiling
-revert_sigcontext
-
-# Create necessary directories
-sudo mkdir -p $USRP_DIR
-sudo mkdir -p /var/log/usrp
-
-# Move the compiled program to the correct folder (skip the INI file)
-sudo cp USRP2M17 /opt/USRP2M17
-
-# Ask for user's callsign
-read -p "Enter your callsign: " callsign
-
-# Create the USRP2M17.ini file with the specified content (common for both setups)
-cat << EOF | sudo tee /opt/USRP2M17/USRP2M17.ini > /dev/null
+    cat > /opt/USRP2M17/USRP2M17.ini << EOF
 [M17 Network]
 Callsign=CHANGEME
 Address=81.231.241.25
@@ -146,38 +198,39 @@ FilePath=/var/log/usrp/
 FileRoot=USRP2M17
 EOF
 
-# Replace "CHANGEME" with the user's callsign in the USRP2M17.ini file
-sudo sed -i "s/Callsign=CHANGEME/Callsign=${callsign}/" /opt/USRP2M17/USRP2M17.ini
+    sed -i "s/Callsign=CHANGEME/Callsign=${callsign}/" /opt/USRP2M17/USRP2M17.ini
 
-# Update connect.php with the user's callsign
-CONNECT_PHP="$WEB_DIR/connect.php"
-if [[ -f $CONNECT_PHP ]]; then
-    sudo sed -i "s/Callsign=CHANGEME/Callsign=${callsign}/" $CONNECT_PHP
-else
-    echo "Warning: connect.php not found."
-fi
+    CONNECT_PHP="$WEB_DIR/connect.php"
+    if [ -f "$CONNECT_PHP" ]; then
+        sed -i "s/Callsign=CHANGEME/Callsign=${callsign}/" "$CONNECT_PHP"
+    else
+        echo "Warning: connect.php not found."
+    fi
+}
 
-# Set ownership and permissions for the web directory and relevant files
-if [ "$OS_TYPE" == "HAMVOIP" ]; then
-    echo "Setting permissions for HamVOIP..."
-    sudo chown http:http /srv/http/m17/reflector_options.txt
-    sudo chown http:http /srv/http/m17/custom_reflectors.txt
-    sudo chown http:http /opt/USRP2M17/USRP2M17.ini
-    sudo chown http:http /opt/USRP2M17
-    sudo chmod 755 /opt/USRP2M17
-    sudo chmod 644 /srv/http/m17/*.txt
-    sudo chmod 644 /opt/USRP2M17/USRP2M17.ini
-else
-    echo "Setting permissions for Allstarlink..."
-    sudo chown -R www-data:www-data $WEB_DIR
-    sudo chmod -R 755 $WEB_DIR
-    sudo chown -R www-data:www-data $USRP_DIR
-    sudo chmod -R 755 $USRP_DIR
-fi
+set_permissions() {
+    if [ "$OS_TYPE" = "HAMVOIP" ]; then
+        echo "Setting permissions for HamVOIP..."
+        chown http:http "$WEB_DIR/reflector_options.txt" 2>/dev/null || true
+        chown http:http "$WEB_DIR/custom_reflectors.txt" 2>/dev/null || true
+        chown http:http /opt/USRP2M17/USRP2M17.ini
+        chown http:http /opt/USRP2M17
+        chmod 755 /opt/USRP2M17
+        chmod 644 "$WEB_DIR"/*.txt 2>/dev/null || true
+        chmod 644 /opt/USRP2M17/USRP2M17.ini
+    else
+        echo "Setting permissions for AllStarLink..."
+        chown -R www-data:www-data "$WEB_DIR"
+        chmod -R 755 "$WEB_DIR"
+        chown -R www-data:www-data "$USRP_DIR"
+        chmod -R 755 "$USRP_DIR"
+    fi
+}
 
-# Create a new systemd unit file for USRP2M17
-SYSTEMD_SERVICE="/usr/lib/systemd/system/usrp2m17.service"
-cat << EOF | sudo tee $SYSTEMD_SERVICE > /dev/null
+create_systemd_service() {
+    SYSTEMD_SERVICE="/usr/lib/systemd/system/usrp2m17.service"
+
+    cat > "$SYSTEMD_SERVICE" << EOF
 [Unit]
 Description=USRP2M17 Service
 After=network-online.target
@@ -187,15 +240,10 @@ StartLimitIntervalSec=0
 [Service]
 Type=simple
 ExecStart=/opt/USRP2M17/USRP2M17 /opt/USRP2M17/USRP2M17.ini
-
 Restart=always
 RestartSec=5
-
-# Helpful for debugging + avoids weird buffering
 StandardOutput=journal
 StandardError=journal
-
-# Give it a clean shutdown
 KillMode=process
 TimeoutStopSec=10
 
@@ -203,16 +251,81 @@ TimeoutStopSec=10
 WantedBy=multi-user.target
 EOF
 
-# Reload systemd to recognize the new service
-sudo systemctl daemon-reload
+    systemctl daemon-reload
+    systemctl enable --now usrp2m17.service
+}
 
-# Start the USRP2M17 service
-sudo systemctl start usrp2m17.service
+# Main Installation Process
+echo "Starting installation for $OS_TYPE..."
 
-# Enable the service to start on boot
-sudo systemctl enable usrp2m17.service
+install_packages
+install_pip_requests
 
-# Delete the git directory
-rm -rf $GIT_DIR
+mkdir -p "$WEB_DIR"
+cp -r "$(pwd)"/* "$WEB_DIR"/
 
-echo "Installation complete and git directory removed."
+clone_mmdvm_cm
+
+cd "$MMDVM_DIR/USRP2M17" || {
+    echo "Failed to change directory to $MMDVM_DIR/USRP2M17"
+    exit 1
+}
+
+systemctl stop usrp2m17.service 2>/dev/null || true
+
+SIGCONTEXT_WAS_PATCHED=0
+
+if [ "$OS_TYPE" = "HAMVOIP" ]; then
+    if backup_sigcontext; then
+        modify_sigcontext
+        SIGCONTEXT_WAS_PATCHED=1
+    fi
+else
+    if is_debian_13; then
+        echo "Debian 13 detected; skipping old sigcontext.h workaround."
+    else
+        if backup_sigcontext; then
+            modify_sigcontext
+            SIGCONTEXT_WAS_PATCHED=1
+        fi
+    fi
+fi
+
+patch_cpp_headers
+
+make clean 2>/dev/null || true
+make
+
+if [ $? -ne 0 ]; then
+    echo "Errors occurred during compilation."
+
+    if [ "$SIGCONTEXT_WAS_PATCHED" -eq 1 ]; then
+        revert_sigcontext
+    fi
+
+    exit 1
+fi
+
+if [ "$SIGCONTEXT_WAS_PATCHED" -eq 1 ]; then
+    revert_sigcontext
+fi
+
+mkdir -p "$USRP_DIR"
+mkdir -p /var/log/usrp
+
+cp USRP2M17 "$USRP_DIR/"
+chmod +x "$USRP_DIR/USRP2M17"
+
+create_ini_file
+set_permissions
+create_systemd_service
+
+rm -rf "$GIT_DIR"
+
+echo "Installation complete."
+echo
+echo "Check service status with:"
+echo "systemctl status usrp2m17.service --no-pager"
+echo
+echo "Check logs with:"
+echo "journalctl -u usrp2m17.service -n 50 --no-pager"
